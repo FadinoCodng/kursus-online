@@ -14,11 +14,12 @@ foreach ($storageDirs as $dir) {
     }
 }
 
-// Salin database SQLite siap pakai jika belum ada di /tmp
+// Salin database SQLite yang sudah di-migrate dan di-seed ke /tmp
 $tmpDb = '/tmp/database.sqlite';
-if (!file_exists($tmpDb)) {
-    $sourceDb = __DIR__ . '/../database/database.sqlite';
-    if (file_exists($sourceDb)) {
+$sourceDb = __DIR__ . '/../database/database.sqlite';
+
+if (!file_exists($tmpDb) || filesize($tmpDb) === 0) {
+    if (file_exists($sourceDb) && filesize($sourceDb) > 0) {
         copy($sourceDb, $tmpDb);
     } else {
         touch($tmpDb);

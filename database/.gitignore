@@ -1,1 +1,1 @@
-*.sqlite*
+# Ignore sqlite except base seed database
